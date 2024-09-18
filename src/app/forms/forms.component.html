@@ -1,0 +1,23 @@
+<div class="container">
+    <h4>Template driven form</h4>
+    <form #form1 = 'ngForm' (ngSubmit)="onSubmit1(form1.controls)">
+        <input type="text" class="form-control" name="username1" placeholder="Enter username" ngModel>
+        <button type="submit" class="btn btn-primary my-3">Submit</button>
+    </form>
+
+    <hr>
+
+    <h4>Reactive form</h4>
+    <form [formGroup]="form2" (ngSubmit)="onSubmit2(form2.controls)">
+        <input type="text" class="form-control my-3" name="username2" placeholder="Enter username" formControlName="username2">
+        <input type="email" class="form-control my-3" name="email" placeholder="Enter email" formControlName="email">
+        @if (form2.controls['email'].touched && form2.controls['email'].errors) {
+            <p class="text-danger">Enter valid email</p>
+        }
+        <button type="button" class="btn btn-primary me-3" (click)="addHobby()">Add hobby</button>
+        <ng-container *ngFor="let data of hobbiesFromArray.controls">
+            <input type="text" class="form-control my-3" placeholder="Add hobby" [formControl]="$any(data)" >
+        </ng-container>
+        <button type="submit" class="btn btn-primary my-3" [disabled]="this.form2.invalid">Submit</button>
+    </form>
+</div>
